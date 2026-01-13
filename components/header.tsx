@@ -1,111 +1,121 @@
 "use client"
 
-import { useState } from "react"
-import Link from "next/link"
-import { Menu, X, ShoppingCart, User } from "lucide-react"
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
+import type React from "react"
 
-const navLinks = [
-  { href: "/", label: "Home", khmerLabel: "ទំព័រដើម" },
-  { href: "/shop", label: "Shop", khmerLabel: "ឈានដល់" },
-  { href: "/blog", label: "Blog", khmerLabel: "ប្លក់" },
-  { href: "/about", label: "About Us", khmerLabel: "អំពីយើងខ្ញុំ" },
-  { href: "/contact", label: "Contact Us", khmerLabel: "ទាក់ទងយើងខ្ញុំ" },
-]
+import Link from "next/link"
+import { ShoppingCart, Search, Menu, User } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { useLanguage } from "@/lib/language-context"
+import { useCart } from "@/lib/cart-context"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Badge } from "@/components/ui/badge"
+import { useState } from "react"
 
 export function Header() {
-  const [isOpen, setIsOpen] = useState(false)
+  const { language, setLanguage, t } = useLanguage()
+  const { cartCount } = useCart()
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`
+    }
+  }
 
   return (
-    <>
-      {/* Desktop Header */}
-      <header className="sticky top-0 z-50 w-full glassmorphism border-b">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="font-bold text-lg md:text-xl text-pink-500 hover:text-purple-600 transition-colors duration-200"
-          >
-            CYRA AI STORE
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+        <div className="flex items-center gap-6">
+          <Link href="/" className="flex items-center gap-2">
+            <div
+              className="flex h-8 w-8 items-center justify-center rounded-lg"
+              style={{ backgroundColor: "var(--color-primary-pink)" }}
+            >
+              <span className="text-lg font-bold text-white">C</span>
+            </div>
+            <span className="text-xl font-bold" style={{ color: "var(--color-primary-pink)" }}>
+              CYRA STORE
+            </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm text-gray-600 hover:text-pink-500 transition-colors duration-200"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Right Actions */}
-          <div className="flex items-center gap-4">
-            {/* Skin Analysis CTA */}
+          <nav className="hidden md:flex items-center gap-6">
             <Link
-              href="/#analysis"
-              className="hidden md:inline-flex items-center justify-center px-6 py-2 bg-pink-500 text-white font-bold rounded-full text-sm hover:bg-purple-600 transition-colors duration-200"
+              href="/products"
+              className="text-sm font-medium text-black transition-colors hover:text-[var(--color-primary-pink)]"
             >
-              ពិនិត្យស្បែកមុខ
+              {t("Products", "ផលិតផល")}
             </Link>
-
-            {/* Icons */}
-            <button className="p-2 text-gray-700 dark:text-gray-300 hover:text-pink-500 transition-colors duration-200">
-              <User size={20} />
-            </button>
-            <button className="p-2 text-gray-700 dark:text-gray-300 hover:text-pink-500 transition-colors duration-200">
-              <ShoppingCart size={20} />
-            </button>
-
-            {/* Mobile Menu */}
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <button className="lg:hidden p-2 text-gray-700 dark:text-gray-300 hover:text-pink-500">
-                  <Menu size={24} />
-                </button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-72 glassmorphism [&>button]:hidden">
-                <div className="flex justify-between items-center mb-8">
-                  <h2 className="text-xl font-bold text-pink-500">CYRA AI STORE</h2>
-                  <SheetClose asChild>
-                    <button className="p-2 hover:bg-pink-50 dark:hover:bg-slate-800 rounded-lg transition-colors">
-                      <X size={20} />
-                    </button>
-                  </SheetClose>
-                </div>
-
-                <nav className="space-y-2">
-                  {navLinks.map((link) => (
-                    <SheetClose key={link.href} asChild>
-                      <Link
-                        href={link.href}
-                        className="flex items-center py-2 px-3 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-slate-800 hover:text-pink-500 transition-colors duration-200 font-medium"
-                      >
-                        <span className="mr-2">{link.label}</span>
-                        <span className="text-xs text-gray-400">({link.khmerLabel})</span>
-                      </Link>
-                    </SheetClose>
-                  ))}
-                </nav>
-
-                <div className="mt-6 pt-6 border-t border-gray-200 dark:border-slate-700 space-y-2">
-                  <SheetClose asChild>
-                    <Link
-                      href="/#analysis"
-                      className="block w-full px-4 py-2 bg-pink-500 text-white font-bold rounded-full text-center hover:bg-purple-600 transition-colors duration-200"
-                    >
-                      ពិនិត្យស្បែកមុខ
-                    </Link>
-                  </SheetClose>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
+            <Link
+              href="/categories"
+              className="text-sm font-medium text-black transition-colors hover:text-[var(--color-primary-pink)]"
+            >
+              {t("Categories", "ប្រភេទ")}
+            </Link>
+            <Link
+              href="/deals"
+              className="text-sm font-medium text-black transition-colors hover:text-[var(--color-primary-pink)]"
+            >
+              {t("Deals", "ការបញ្ចុះតម្លៃ")}
+            </Link>
+          </nav>
         </div>
-      </header>
-    </>
+
+        <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-4">
+          <div className="relative w-full">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <Input
+              type="search"
+              placeholder={t("Search products...", "ស្វែងរកផលិតផល...")}
+              className="pl-10 border-gray-200 focus-visible:ring-[var(--color-active-purple)]"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </form>
+
+        <div className="flex items-center gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="text-black hover:text-[var(--color-primary-pink)]">
+                {language === "en" ? "EN" : "ខ្មែរ"}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => setLanguage("en")}>English</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage("km")}>ភាសាខ្មែរ</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Button variant="ghost" size="icon" className="relative hover:text-[var(--color-primary-pink)]" asChild>
+            <Link href="/cart">
+              <ShoppingCart className="h-5 w-5" style={{ color: "var(--color-primary-pink)" }} />
+              {cartCount > 0 && (
+                <Badge
+                  className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs text-white font-bold"
+                  style={{ backgroundColor: "var(--color-active-purple)" }}
+                >
+                  {cartCount}
+                </Badge>
+              )}
+              <span className="sr-only">{t("Cart", "រទេះ")}</span>
+            </Link>
+          </Button>
+
+          <Button variant="ghost" size="icon" asChild className="hover:text-[var(--color-primary-pink)]">
+            <Link href="/auth/login">
+              <User className="h-5 w-5" style={{ color: "var(--color-primary-pink)" }} />
+              <span className="sr-only">{t("Account", "គណនី")}</span>
+            </Link>
+          </Button>
+
+          <Button variant="ghost" size="icon" className="md:hidden">
+            <Menu className="h-5 w-5" />
+            <span className="sr-only">{t("Menu", "ម៉ឺនុយ")}</span>
+          </Button>
+        </div>
+      </div>
+    </header>
   )
 }

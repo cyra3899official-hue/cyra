@@ -1,155 +1,133 @@
 "use client"
 
 import Link from "next/link"
-import { Facebook, Instagram, Music, MapPin, Phone, Mail } from "lucide-react"
+import { useLanguage } from "@/lib/language-context"
+import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react"
 
 export function Footer() {
+  const { t } = useLanguage()
+
   return (
-    <footer className="bg-gray-50 dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800">
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Column 1: Brand */}
-          <div className="space-y-4">
-            <div>
-              <h3 className="font-bold text-lg text-pink-500 mb-2">CYRA AI STORE</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">AI-Powered Skincare for You</p>
+    <footer className="border-t bg-muted/40">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <div className="mb-4 flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+                <span className="text-lg font-bold text-primary-foreground">C</span>
+              </div>
+              <span className="text-xl font-bold">CYRA STORE</span>
             </div>
-            <div className="flex gap-3">
-              <a
-                href="#"
-                className="p-2 rounded-lg bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-400 hover:text-pink-500 hover:bg-pink-50 dark:hover:bg-slate-700 transition-colors duration-200"
-              >
-                <Facebook size={18} />
-              </a>
-              <a
-                href="#"
-                className="p-2 rounded-lg bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-400 hover:text-pink-500 hover:bg-pink-50 dark:hover:bg-slate-700 transition-colors duration-200"
-              >
-                <Instagram size={18} />
-              </a>
-              <a
-                href="#"
-                className="p-2 rounded-lg bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-400 hover:text-pink-500 hover:bg-pink-50 dark:hover:bg-slate-700 transition-colors duration-200"
-              >
-                <Music size={18} />
-              </a>
-            </div>
+            <p className="text-sm text-muted-foreground">
+              {t(
+                "Your trusted e-commerce destination for quality products at great prices.",
+                "គោលដៅអេឡិចត្រូនិកពាណិជ្ជកម្មដែលអ្នកទុកចិត្តសម្រាប់ផលិតផលគុណភាពក្នុងតម្លៃល្អ",
+              )}
+            </p>
           </div>
 
-          {/* Column 2: Shop */}
           <div>
-            <h4 className="font-bold text-gray-900 dark:text-white mb-4">Shop</h4>
-            <ul className="space-y-2">
+            <h3 className="mb-4 font-semibold">{t("Quick Links", "តំណភ្ជាប់រហ័ស")}</h3>
+            <ul className="space-y-2 text-sm">
               <li>
-                <Link
-                  href="/shop"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-pink-500 transition-colors duration-200"
-                >
-                  All Products
+                <Link href="/products" className="text-muted-foreground transition-colors hover:text-foreground">
+                  {t("Products", "ផលិតផល")}
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/shop?category=best-sellers"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-pink-500 transition-colors duration-200"
-                >
-                  Best Sellers
+                <Link href="/categories" className="text-muted-foreground transition-colors hover:text-foreground">
+                  {t("Categories", "ប្រភេទ")}
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/shop?category=new"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-pink-500 transition-colors duration-200"
-                >
-                  New Arrivals
+                <Link href="/deals" className="text-muted-foreground transition-colors hover:text-foreground">
+                  {t("Deals", "ការបញ្ចុះតម្លៃ")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-muted-foreground transition-colors hover:text-foreground">
+                  {t("About Us", "អំពីយើង")}
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Support */}
           <div>
-            <h4 className="font-bold text-gray-900 dark:text-white mb-4">Support</h4>
-            <ul className="space-y-2">
+            <h3 className="mb-4 font-semibold">{t("Customer Service", "សេវាកម្មអតិថិជន")}</h3>
+            <ul className="space-y-2 text-sm">
               <li>
-                <Link
-                  href="/track-order"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-pink-500 transition-colors duration-200"
-                >
-                  Track Order
+                <Link href="/contact" className="text-muted-foreground transition-colors hover:text-foreground">
+                  {t("Contact Us", "ទាក់ទងយើង")}
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/returns"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-pink-500 transition-colors duration-200"
-                >
-                  Returns Policy
+                <Link href="/shipping" className="text-muted-foreground transition-colors hover:text-foreground">
+                  {t("Shipping Info", "ព័ត៌មានដឹកជញ្ជូន")}
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/faq"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-pink-500 transition-colors duration-200"
-                >
-                  FAQs
+                <Link href="/returns" className="text-muted-foreground transition-colors hover:text-foreground">
+                  {t("Returns", "ការត្រឡប់មកវិញ")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="text-muted-foreground transition-colors hover:text-foreground">
+                  {t("FAQ", "សំណួរ")}
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Contact */}
           <div>
-            <h4 className="font-bold text-gray-900 dark:text-white mb-4">Contact</h4>
-            <ul className="space-y-3">
+            <h3 className="mb-4 font-semibold">{t("Contact Info", "ព័ត៌មានទំនាក់ទំនង")}</h3>
+            <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2">
-                <MapPin size={16} className="text-pink-500 mt-0.5 flex-shrink-0" />
-                <span className="text-sm text-gray-600 dark:text-gray-400">
-                  789 Skincare Street, Beauty City, BC 12345
-                </span>
+                <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0 text-muted-foreground" />
+                <span className="text-muted-foreground">123 Street, Phnom Penh, Cambodia</span>
               </li>
               <li className="flex items-center gap-2">
-                <Phone size={16} className="text-pink-500 flex-shrink-0" />
-                <a
-                  href="tel:+1234567890"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-pink-500 transition-colors duration-200"
-                >
-                  +1 (234) 567-890
-                </a>
+                <Phone className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                <span className="text-muted-foreground">+855 12 345 678</span>
               </li>
               <li className="flex items-center gap-2">
-                <Mail size={16} className="text-pink-500 flex-shrink-0" />
-                <a
-                  href="mailto:support@cyraaistores.com"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-pink-500 transition-colors duration-200"
-                >
-                  support@cyra.com
-                </a>
+                <Mail className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                <span className="text-muted-foreground">support@cyrastore.com</span>
               </li>
             </ul>
+
+            <div className="mt-4 flex gap-3">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <Twitter className="h-5 w-5" />
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-gray-200 dark:border-slate-800">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-gray-600 dark:text-gray-400">© 2026 CYRA AI STORE. All rights reserved.</p>
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-gray-500 dark:text-gray-500">Accepted payments:</span>
-              <div className="flex gap-2">
-                <div className="px-2 py-1 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded text-xs font-semibold text-gray-700 dark:text-gray-300">
-                  Visa
-                </div>
-                <div className="px-2 py-1 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded text-xs font-semibold text-gray-700 dark:text-gray-300">
-                  MC
-                </div>
-                <div className="px-2 py-1 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded text-xs font-semibold text-gray-700 dark:text-gray-300">
-                  ABA
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
+          <p>
+            &copy; {new Date().getFullYear()} CYRA STORE. {t("All rights reserved.", "រក្សាសិទ្ធិគ្រប់យ៉ាង។")}
+          </p>
         </div>
       </div>
     </footer>

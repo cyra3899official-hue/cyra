@@ -1,17 +1,19 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Noto_Sans_Khmer } from "next/font/google"
+import { Geist, Geist_Mono } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
+import "./globals.css"
+import { LanguageProvider } from "@/lib/language-context"
+import { CartProvider } from "@/lib/cart-context"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
-const _khmer = Noto_Sans_Khmer({ subsets: ["khmer"], weight: ["400", "500", "600", "700"] })
 
 export const metadata: Metadata = {
-  title: "CYRA STORE - AI-Powered Skincare",
-  description: "Premium skincare products with AI skin analysis technology",
+  title: "CYRA STORE - Your Premium E-Commerce Destination",
+  description: "Shop the best products at amazing prices. Quality electronics, fashion, home goods and more.",
   generator: "v0.app",
   icons: {
     icon: [
@@ -40,9 +42,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <LanguageProvider>
+          <CartProvider>
+            <Header />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+          </CartProvider>
+        </LanguageProvider>
+        <Analytics />
       </body>
     </html>
   )
