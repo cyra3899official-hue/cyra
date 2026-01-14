@@ -30,7 +30,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   }
 
   const images = (product.product_images || []).sort((a: any, b: any) => a.position - b.position)
-  const mainImage = product.image_url || images[0]?.image_url || "/skincare-product-display.png"
+  const mainImage = images[0]?.image_url || "/placeholder.svg?height=600&width=600"
   const discount = product.compare_at_price
     ? Math.round(((product.compare_at_price - product.price) / product.compare_at_price) * 100)
     : 0
@@ -50,7 +50,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 </Badge>
               )}
             </div>
-            {images.length > 0 && (
+            {images.length > 1 && (
               <div className="grid grid-cols-4 gap-4">
                 {images.slice(0, 4).map((img: any) => (
                   <div key={img.id} className="relative aspect-square overflow-hidden rounded-lg bg-muted">
